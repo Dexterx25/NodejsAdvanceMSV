@@ -1,0 +1,24 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>    
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <h1>MIRA LA CONSOLA, cole
+    </h1>
+    <script>
+        var socket = io.connect('http://18.224.173.158:3004/api/chats/app',{//ahora crearmos una variable que señale a la conección
+        forceNew: true,                               //de websocket direccionada a nuestro servidor que en este
+// y le creamos un parámetro de configuració                //caso es el del localhost
+//para que la coneción sea siempre nueva
+
+   
+        });
+        socket.on('message', function(data){ //para saber si nos llega mensajes creamos un evento ".on" para
+                                             //este modulo en donde le pasaremos una función callback con los datos
+            console.log(data) //y seteamos los datos en consola
+        }) 
+    </script>
+</body>
+</html> -->

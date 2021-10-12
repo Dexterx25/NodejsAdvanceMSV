@@ -1,0 +1,67 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "node": true,
+      "jest": true,
+      "es2021": true
+    },
+    "plugins": [
+      "react",
+      "react-hooks",
+      "@typescript-eslint",
+      "prettier", "import"
+    ],
+    "extends": [
+      "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+      "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+      "plugin:prettier/recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2018
+    },
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"]
+      },
+      "react": {
+        "version": "detect"
+      },
+      "import/resolver": {
+        "typescript": {
+          "alwaysTryTypes": true, // always try to resolve types under `<root>@types` directory even it doesn"t contain any source code, like `@types/unist`
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          },
+          "typescript": {
+            "alwaysTryTypes": true,
+            "paths": "./tsconfig.json"
+         },
+          // Choose from one of the "project" configs below or omit to use <root>/tsconfig.json by default
+  
+          // use <root>/path/to/folder/tsconfig.json
+          "project": "./tsconfig.json"
+        }
+      }
+    },
+    "rules": {
+      "linebreak-style": ["error", "unix"],
+      "react-hooks/rules-of-hooks": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/prefer-const":"off",
+      "@typescript-eslint/no-var-requires": 0,
+      "react-hooks/exhaustive-deps": "warn",
+      "import/extensions": "off",
+      "no-console": "off",
+      "no-unused-vars": ["off", { "args": "all", "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/no-unused-vars": ["off", { "args": "all", "argsIgnorePattern": "^_" }],
+      "prettier/prettier": ["error", {
+        "endOfLine":"auto"
+      }]
+    }
+  }
