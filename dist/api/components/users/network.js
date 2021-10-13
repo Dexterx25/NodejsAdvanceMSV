@@ -29,7 +29,7 @@ const upload = (0, multer_1.default)({
     storage: storage
 });
 router.post('/', upload.single('file'), upsert);
-router.get('/:id', (0, secure_1.default)('get'), get);
+router.get('/:id', get);
 router.get('/', (0, secure_1.default)('list'), list);
 router.put('/:id', (0, secure_1.default)('update'), update);
 router.delete('/:id', (0, secure_1.default)('delete'), remove);
@@ -71,7 +71,7 @@ function get(req, res, next) {
         })
             .catch((err) => {
             console.log('this is the error--°', err);
-            ServerResponse.error(req, res, err);
+            ServerResponse.error(req, res, err, 400);
         });
     });
 }

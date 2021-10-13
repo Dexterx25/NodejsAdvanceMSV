@@ -15,16 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mosca_1 = __importDefault(require("mosca"));
 const mqtt_1 = __importDefault(require("mqtt"));
 const network_1 = __importDefault(require("./components/subscriber/network"));
+const chalk_1 = __importDefault(require("chalk"));
+const path_1 = __importDefault(require("path"));
+require('dotenv').config({ path: path_1.default.resolve(__dirname, '../../.env') });
 const broker = new mosca_1.default.Server({
     port: 1883
 });
 mqtt_1.default.connect('mqtt://localhost:1883');
 broker.on('ready', () => {
-    console.log('Mosca broker is ready!');
+    console.log(chalk_1.default.blue.underline.bgWhite('MQTT broker is ready!'));
 });
 broker.on('clientConnected', (client) => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, network_1.default)(client);
 }));
-console.log('MQTTT');
 exports.default = broker;
 //# sourceMappingURL=mqtt.js.map

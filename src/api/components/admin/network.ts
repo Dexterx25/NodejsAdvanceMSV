@@ -7,7 +7,7 @@ const {
 } = require('../../../utils/responses/index');
 import secure from './secure';
 const router: Router = Router();
-router.post('/register', upsert);
+router.post('/', upsert);
 let procedence = 'ADMIN NETWORK';
 
 async function upsert(req: Request, res: Response, next: NextFunction) {

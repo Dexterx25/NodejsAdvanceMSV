@@ -1,0 +1,553 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is a API REST made with Nodejs 14.15.1 with typescript language using MVC estructure, Microservices, JWT for authorizations (bearer tokens), Redis for caché, MQTT Mosca protocol, WebSockets protocol, Postgres, MongoDB, Mongoose ORM",
+      "version": "1.0.0",
+      "title": "Test Lya Backend",
+      "contact": {
+        "email": "davidblancokdf@gmail.com"
+      }
+    },
+    "host": "localhost:3000",
+    "tags": [
+      {
+        "name": "users",
+        "description": "All datas about users",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://localhost:3000/users"
+        }
+      },
+      {
+        "name": "authorization",
+        "description": "Enpoint to sign in and signout user"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "paths": {
+      "/users": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Create user",
+          "description": "With this endpoint you can create a user and return a id",
+          "operationId": "createUserExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Created user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User Created",
+              "schema": {
+                "$ref": "#/definitions/UserCreated"
+              }
+            },
+            "400": {
+              "description": "User doesnt created"
+            }
+          }
+        },
+        "get": {
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
+          "tags": [
+            "user"
+          ],
+          "summary": "List Users",
+          "description": "Get All users if there are active atribute in true. Just you can use this endpoint ahve a token",
+          "operationId": "ListUserExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "List users",
+              "schema": {
+                "$ref": "#/definitions/UserGet"
+              }
+            },
+            "400": {
+              "description": "there are not users or any one there are not active"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Get User by Id if active",
+          "description": "Get user by id if is active atribute is true for that user",
+          "operationId": "getUserExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User Created",
+              "schema": {
+                "$ref": "#/definitions/UserGet"
+              }
+            },
+            "400": {
+              "description": "User doesnt created"
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
+          "tags": [
+            "user"
+          ],
+          "summary": "Update user",
+          "description": "With this endpoint you can update the user using your token or an admin Bearer token. Please write token with this schema: Bearer 'token'",
+          "operationId": "updateUserExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Created user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User update",
+              "schema": {
+                "$ref": "#/definitions/UserGet"
+              }
+            },
+            "400": {
+              "description": "User doesnt created"
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
+          "tags": [
+            "user"
+          ],
+          "summary": "delete user for the system",
+          "description": "This endpoint can be use to delete user using a bearer admin token. Use the format toke like this: Bearer 'token' ",
+          "operationId": "deleteUser",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "202": {
+              "description": "The basic user was delete"
+            },
+            "401": {
+              "description": "Invalid token, not is a admin token"
+            },
+            "403": {
+              "description": "token empaty",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "xml": {
+                  "name": "authorizations"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/{id}/active/": {
+        "patch": {
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
+          "tags": [
+            "user"
+          ],
+          "summary": "Patch User Active Atribute",
+          "description": "With this endpoint you can patch the user active atribute using an admin Bearer token. Please write token with this schema: Bearer 'token'",
+          "operationId": "PatchUserExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Created user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Patch User",
+              "schema": {
+                "$ref": "#/definitions/UserGet"
+              }
+            },
+            "400": {
+              "description": "User doesnt created"
+            }
+          }
+        }
+      },
+      "/admins": {
+        "post": {
+          "tags": [
+            "admin"
+          ],
+          "summary": "Create and login super user returning id and token",
+          "description": "With this endpoint you cant create an admin",
+          "operationId": "createAminExecute",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Created Admin object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Admin user Created",
+              "schema": {
+                "$ref": "#/definitions/AdminCreated"
+              }
+            },
+            "400": {
+              "description": "User doesnt created"
+            }
+          }
+        }
+      },
+      "/authorization": {
+        "post": {
+          "tags": [
+            "authorization"
+          ],
+          "summary": "Login user into the system",
+          "description": "",
+          "operationId": "loginUser",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Created user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserLogin"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User succefull login",
+              "schema": {
+                "$ref": "#/definitions/UserLoged"
+              }
+            },
+            "400": {
+              "description": "User could be login"
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
+          "tags": [
+            "authorization"
+          ],
+          "summary": "logeOut the system",
+          "description": "This endpoint goin to delete the token of users session",
+          "operationId": "logeOutExecute",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "token empaty",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "xml": {
+                  "name": "authorizations"
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid token"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLoged": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "names": {
+            "type": "string"
+          },
+          "surnames": {
+            "type": "string"
+          },
+          "prefix_number": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "type_user_id": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "UserCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "UserGet": {
+        "type": "object",
+        "properties": {
+          "names": {
+            "type": "string"
+          },
+          "surnames": {
+            "type": "string"
+          },
+          "prefix_name": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "type_user_id": {
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "UserGet"
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "names": {
+            "type": "string"
+          },
+          "surnames": {
+            "type": "string"
+          },
+          "prefix_number": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "password_verification": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Tag"
+        }
+      },
+      "AdminCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://localhost"
+    }
+  }

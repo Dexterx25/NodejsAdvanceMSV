@@ -23,6 +23,7 @@ function default_1(injectedStore, injectedCache) {
     if (!cache) {
         cache = require('../../../store/dummy');
     }
+    // eslint-disable-next-line prefer-const
     let table = 'messages';
     function insert({ datas, type }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -32,6 +33,7 @@ function default_1(injectedStore, injectedCache) {
                     reject({ msg: responValidator });
                     return false;
                 }
+                // eslint-disable-next-line prefer-const
                 let data = new model_1.default(datas);
                 try {
                     const responChat = yield store.upsert(table, { data, type });
@@ -61,7 +63,7 @@ function default_1(injectedStore, injectedCache) {
     }
     return {
         insert,
-        list,
+        list
     };
 }
 exports.default = default_1;

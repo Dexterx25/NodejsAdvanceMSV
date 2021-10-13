@@ -23,7 +23,7 @@ const upload = multer({
 });
 
 router.post('/', upload.single('file'), upsert);
-router.get('/:id', secure('get'), get);
+router.get('/:id', get);
 router.get('/', secure('list'), list);
 router.put('/:id', secure('update'), update);
 router.delete('/:id', secure('delete'), remove);
@@ -66,7 +66,7 @@ async function get(req: Request, res: Response, next: NextFunction) {
     })
     .catch((err) => {
       console.log('this is the error--°', err);
-      ServerResponse.error(req, res, err);
+      ServerResponse.error(req, res, err, 400);
     });
 }
 

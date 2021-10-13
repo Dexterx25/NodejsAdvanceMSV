@@ -3,8 +3,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 export const config: any = {
   usingDb: {
-    mongoDB: true,
-    postgres: false
+    mongoDB: false,
+    postgres: true
   },
   api: {
     host: process.env.API_HOST || 'localhost',

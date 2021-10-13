@@ -22,12 +22,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const { config } = require('../../../configurations/index');
+const index_1 = require("../../configurations/index");
 const thecache = __importStar(require("../../store/redis"));
 const storeRemote = __importStar(require("../../store/remote-postgres"));
 const storeLocal = __importStar(require("../../store/postgres"));
 let store, cache;
-if (config.remoteDB === true) {
+if (index_1.config.remoteDB === true) {
     store = storeRemote;
     cache = require('../../../store/remote-cache');
 }

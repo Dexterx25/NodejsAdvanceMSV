@@ -1,19 +1,16 @@
 /* eslint-disable prefer-const */
 export async function Validator(data: any) {
+  console.log('THIS IS DATA VALIDATOR--->', data);
   const {
     names,
     surnames,
     prefix_number,
     phone_number,
     password,
-    date_birtday,
-    password_verification,
-    weight,
-    height
+    password_verification
   } = data;
-
   let full_name = `${names} ${surnames}`;
-
+  console.log('ESTA ES LA CONTRASEÑA1111--->', password);
   if (data.email) {
     const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (data.email.length > 300)
@@ -24,77 +21,8 @@ export async function Validator(data: any) {
     return 'Es necesario suministrar un correo';
   }
 
-  if (prefix_number) {
-    function regexValidator(valor: any) {
-      console.log('vall-->', valor);
-      const patron = /[áéíóúñÑÄËÏÖÜÂÊÎÔÛáàèìòù]/;
-      const patron2 = /^[A-Z]+$/i;
-      if (patron.test(valor) == true) {
-        console.log('error Acents');
-        return 'No se aceptan acentos ni "ñ" en indicativo telefónico';
-      } else if (patron2.test(valor) == true) {
-        console.log('Error Alphabetic');
-        return 'No se permiten letras del alfabeto, solo "+" o "-" seguido el numero indicativo';
-      } else {
-        return '';
-      }
-    }
-    for (let i = 0; i < prefix_number.length; i++) {
-      const character = prefix_number.charAt(i);
-      const regex = await regexValidator(character);
-      if (regex) {
-        return regex;
-      }
-    }
-    if (prefix_number !== '+57')
-      return 'Por el momento es necesario que sea de indicatívo colombia';
-    if (prefix_number) return '';
-  } else {
-    return 'Es necesario que haya número indicativo';
-  }
-
-  if (phone_number) {
-    function regexValidator(valor: any) {
-      console.log('vall-->', valor);
-      const patron = /[áéíóúñÑÄËÏÖÜÂÊÎÔÛáàèìòù]/;
-      const patron2 = /^[A-Z_ | \w+( \w+)]+$/;
-      if (patron.test(valor) == true) {
-        console.log('error Acents');
-        return 'No se aceptan acentos ni "ñ" en númoero telefónico';
-      } else if (patron2.test(valor) == true) {
-        console.log('Error Alphabetic');
-        return 'No se permiten letras del alfabeto';
-      } else {
-        return '';
-      }
-    }
-    for (let i = 0; i < phone_number.length; i++) {
-      const character = phone_number.charAt(i);
-      const regex = await regexValidator(character);
-      if (regex) {
-        return regex;
-      }
-    }
-    if (phone_number.length !== 10)
-      return 'El número telefónico no puede ser mayor o menor a 19 dígitos';
-  } else {
-    return 'Es necesario suministrar un número de teléfono';
-  }
-
-  if (height.length) {
-    if (height.length > 4 || height.includes('-') || height.includes(','))
-      return 'La estatura no es váida';
-  } else {
-    return 'Es necesario suministrar la estatura';
-  }
-
-  if (weight) {
-    if (weight.length > 3) return 'El peso soministrado no es válido';
-  } else {
-    return 'Es necesario suministrar el peso';
-  }
-
-  if (password) {
+  if (password.length) {
+    console.log('ENTRO POR LA VALIDACION DE PASSWORD-->', password);
     if (password.length < 8)
       return 'La contraseña debe ser mayor o igual a 8 caractéres';
     if (password !== password_verification)
@@ -122,6 +50,65 @@ export async function Validator(data: any) {
     }
   } else {
     return 'Es necesario suministrar una contraseña';
+  }
+
+  if (phone_number.length) {
+    console.log('ENTRA EN PHONE NUMBER');
+    if (phone_number.length !== 10) {
+      return 'El número telefónico no puede ser mayor o menor a 10 dígitos';
+    }
+    function regexValidator(valor: any) {
+      console.log('vall-->', valor);
+      const patron = /[áéíóúñÑÄËÏÖÜÂÊÎÔÛáàèìòù]/;
+      const patron2 = /^[A-Z]+$/i;
+      if (patron.test(valor) == true) {
+        console.log('error Acents');
+        return 'No se aceptan acentos ni "ñ" en númoero telefónico';
+      } else if (patron2.test(valor) == true) {
+        console.log('Error Alphabetic');
+        return 'No se permiten letras del alfabeto';
+      } else {
+        return '';
+      }
+    }
+    for (let i = 0; i < phone_number.length; i++) {
+      const character = phone_number.charAt(i);
+      const regex = await regexValidator(character);
+      if (regex) {
+        return regex;
+      }
+    }
+  } else {
+    return 'Es necesario suministrar un número de teléfono';
+  }
+
+  if (prefix_number) {
+    function regexValidator(valor: any) {
+      console.log('vall-->', valor);
+      const patron = /[áéíóúñÑÄËÏÖÜÂÊÎÔÛáàèìòù]/;
+      const patron2 = /^[A-Z]+$/i;
+      if (patron.test(valor) == true) {
+        console.log('error Acents');
+        return 'No se aceptan acentos ni "ñ" en indicativo telefónico';
+      } else if (patron2.test(valor) == true) {
+        console.log('Error Alphabetic');
+        return 'No se permiten letras del alfabeto, solo "+" o "-" seguido el numero indicativo';
+      } else {
+        return '';
+      }
+    }
+    for (let i = 0; i < prefix_number.length; i++) {
+      const character = prefix_number.charAt(i);
+      const regex = await regexValidator(character);
+      if (regex) {
+        return regex;
+      }
+    }
+    if (prefix_number !== '+57') {
+      return 'Por el momento es necesario que sea de indicatívo colombia';
+    }
+  } else {
+    return 'Es necesario que haya número indicativo';
   }
 
   if (names.length || surnames.length) {

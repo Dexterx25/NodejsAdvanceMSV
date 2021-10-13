@@ -93,6 +93,11 @@ export default function (injectedStore: any, injectedCache: any) {
 
   async function update({ datas, id, type }: any) {
     return new Promise(async (resolve, reject) => {
+      const responValidator = await Validator(datas);
+      if (responValidator) {
+        reject({ msg: responValidator });
+        return false;
+      }
       const data = Object.assign(new userModel(datas), { id });
 
       try {

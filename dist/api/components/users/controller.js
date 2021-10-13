@@ -113,6 +113,11 @@ function default_1(injectedStore, injectedCache) {
     function update({ datas, id, type }) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                const responValidator = yield (0, index_2.Validator)(datas);
+                if (responValidator) {
+                    reject({ msg: responValidator });
+                    return false;
+                }
                 const data = Object.assign(new model_1.default(datas), { id });
                 try {
                     const dataRespon = yield store.upsert(table, { data, type });

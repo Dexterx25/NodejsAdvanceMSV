@@ -17,7 +17,7 @@ const express_1 = require("express");
 const index_1 = __importDefault(require("./index"));
 const { ServerResponse, ConsoleResponse } = require('../../../utils/responses/index');
 const router = (0, express_1.Router)();
-router.post('/register', upsert);
+router.post('/', upsert);
 let procedence = 'ADMIN NETWORK';
 function upsert(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {

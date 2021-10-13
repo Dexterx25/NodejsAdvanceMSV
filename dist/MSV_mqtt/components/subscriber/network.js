@@ -8,7 +8,6 @@ const secure_1 = __importDefault(require("./secure"));
 const controller_1 = __importDefault(require("./controller"));
 const sub = mqtt_1.default.connect('mqtt://localhost:1883');
 function default_1(client) {
-    console.log('AQUI ID--->', client.id);
     sub.on('connect', () => {
         sub.subscribe('outTopic');
         sub.subscribe('temp');

@@ -13,14 +13,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let clients_id = ['nodeMcuAngieMarriaga'];
 function secure(client_id) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('CLIENT SECUREEE', client_id);
         return new Promise((resolve, reject) => {
             if (clients_id.findIndex((e) => e == clients_id) == -1) {
-                console.log('NOPE');
                 reject({ msg: 'Este cliente no está permitido!' });
             }
             else {
-                console.log('YEEEP');
                 resolve(client_id);
             }
         });

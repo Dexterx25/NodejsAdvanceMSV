@@ -53,7 +53,7 @@ function cheakAuth(action) {
                     next();
                     break;
                 case 'delete':
-                    yield auth.cheak.logged(req, res);
+                    yield auth.cheak.loggedAdmin(req, res);
                     next();
                     break;
                 case 'active':

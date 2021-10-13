@@ -24,7 +24,7 @@ export default function cheakAuth(action: any) {
         next();
         break;
       case 'delete':
-        await auth.cheak.logged(req, res);
+        await auth.cheak.loggedAdmin(req, res);
         next();
         break;
       case 'active':

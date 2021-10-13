@@ -8,8 +8,8 @@ const path_1 = __importDefault(require("path"));
 require('dotenv').config({ path: path_1.default.resolve(__dirname, '../../.env') });
 exports.config = {
     usingDb: {
-        mongoDB: true,
-        postgres: false
+        mongoDB: false,
+        postgres: true
     },
     api: {
         host: process.env.API_HOST || 'localhost',
@@ -45,6 +45,10 @@ exports.config = {
     },
     mqtt_config: {
         publisher: { serial_conexion: false }
+    },
+    chatsServices: {
+        port: process.env.CHATS_MSV_PORT || 3003,
+        host: process.env.CHATS_MSV_HOST || 'localhost'
     }
 };
 //# sourceMappingURL=index.js.map

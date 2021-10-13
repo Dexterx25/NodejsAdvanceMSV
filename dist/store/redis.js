@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.upsert = exports.get = exports.list = void 0;
 const redis_1 = __importDefault(require("redis"));
 const index_1 = require("../configurations/index");
+const chalk_1 = __importDefault(require("chalk"));
 const client = redis_1.default.createClient({
     host: index_1.config.redis.host,
     port: index_1.config.redis.port
     //  password: config.redis.password,
 });
-client.on('ready', (_) => console.log('REDIS SERVICE IS RUNNING!'));
+// eslint-disable-next-line prettier/prettier
+client.on('ready', (_) => console.log(chalk_1.default.blue.underline.bgWhite('Redis service is ready!')));
 function list(table) {
     return new Promise((resolve, reject) => {
         client.get(table, (err, data) => {
