@@ -39,7 +39,9 @@ export const config: any = {
     private_key: process.env.EPAYCO_EPAYCO_PRIVATE_KEY || 'testPrivate'
   },
   mqtt_config: {
-    publisher: { serial_conexion: false }
+    publisher: { serial_conexion: false },
+    host: process.env.MQTT_HOST || 'mqtt.lyaelectronic.com',
+    port: process.env.MQTT_PORT || '1883'
   },
   chatsServices: {
     port: process.env.CHATS_MSV_PORT || 3003,

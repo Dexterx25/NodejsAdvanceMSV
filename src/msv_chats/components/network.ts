@@ -28,6 +28,7 @@ async function upsert(req: Request, res: Response, next: NextFunction) {
   const datas: Record<string, unknown> = {
     type: 'send_message',
     datas: req.body,
+    token: req.headers.authorization,
     files: req.files
   };
   console.log('UPSERTTTTT message', datas);

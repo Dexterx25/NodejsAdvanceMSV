@@ -50,7 +50,7 @@ export default function (injectedStore: any) {
 
         resolve(Object.assign({ id: user_id }, newObject));
       } else {
-        reject({ msg: 'Invalid Password' });
+        reject({ msg: 'Invalid Password', statusCode: 400 });
       }
     });
   };

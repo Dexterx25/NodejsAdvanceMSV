@@ -4,6 +4,8 @@ import {
 } from '../../utils/actions/personas/index';
 import * as auth from '../../authorizations/index';
 import messageModel from './model';
+import { decodeHeader } from '../../authorizations/index';
+import { sendMQTTMessage } from '../../MSV_mqtt/components/publisher/controller';
 export default function (injectedStore: any, injectedCache: any) {
   let cache = injectedCache;
   let store = injectedStore;
@@ -17,17 +19,14 @@ export default function (injectedStore: any, injectedCache: any) {
   // eslint-disable-next-line prefer-const
   let table = 'messages';
 
-  async function insert({ datas, type }: any) {
+  async function insert({ datas, type, token }: any) {
+    const { id }: any = await decodeHeader({ token });
+    console.log('this is the id decoded-->', id);
     return new Promise(async (resolve, reject) => {
-      const responValidator = await Validator(datas);
-      if (responValidator) {
-        reject({ msg: responValidator });
-        return false;
-      }
       // eslint-disable-next-line prefer-const
-      let data = new messageModel(datas);
+      let data: messageModel = new messageModel(Object.assign(datas, { id }));
       try {
-        const responChat: any = await store.upsert(table, { data, type });
+        const responChat: any = await sendMQTTMessage(data);
         resolve(responChat);
       } catch (e) {
         await midlleHandleError(e, table, datas, resolve, reject);
